@@ -50,7 +50,7 @@ func parseVersion(node *xmlquery.Node, globalNode *xmlquery.Node, artifactId *st
     return ""
 }
 
-func Parse(filePath string) ([]Dependency) {
+func ParsePomFile(filePath string) ([]Dependency) {
     if !fileExists(filePath) {
         log.Fatalf("File %s not found", filePath)
     }
