@@ -1,6 +1,12 @@
 package main
 
+import "fmt"
+
+
 func main() {
-    Parse("pom.xml")
+    dependencies := Parse("pom.xml")
+    for _, dep := range dependencies {
+	fmt.Printf("ArtifactId: %s\nVersion: %s\n\n", dep.ArtifactId, dep.Version)
+    }
 }
 

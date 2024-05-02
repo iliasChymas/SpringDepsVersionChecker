@@ -50,7 +50,7 @@ func parseVersion(node *xmlquery.Node, globalNode *xmlquery.Node, artifactId *st
     return ""
 }
 
-func Parse(filePath string) {
+func Parse(filePath string) ([]Dependency) {
     if !fileExists(filePath) {
         log.Fatalf("File %s not found", filePath)
     }
@@ -70,8 +70,8 @@ func Parse(filePath string) {
 	    ArtifactId: artifactId,
 	    Version: parseVersion(dep, doc, &artifactId),
 	}
-	fmt.Printf("ArtifactId: %s\nVersion: %s\n\n", dependencies[idx].ArtifactId, dependencies[idx].Version)
     }
+    return dependencies
 }
 
 
