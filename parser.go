@@ -1,13 +1,11 @@
 package main
 
 import (
-	"encoding/xml"
 	"errors"
 	"fmt"
 	"log"
 	"os"
 	"regexp"
-
 	"github.com/antchfx/xmlquery"
 )
 
@@ -15,11 +13,6 @@ type Dependency struct {
     GroupId string `xml:"groupId"`
     ArtifactId string `xml:"artifactId"`
     Version string `xml:"version,omitempty"`
-}
-
-type Dependencies struct {
-    XMLName xml.Name  `xml:"dependencies"`
-    DependenciesList []Dependency `xml:"dependency"`
 }
 
 func fileExists(filepath string) bool {
