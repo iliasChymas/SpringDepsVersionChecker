@@ -1,19 +1,13 @@
 package main
 
 import (
-	"errors"
-	"fmt"
-	"log"
-	"os"
-	"regexp"
-	"github.com/antchfx/xmlquery"
+    "errors"
+    "fmt"
+    "log"
+    "os"
+    "regexp"
+    "github.com/antchfx/xmlquery"
 )
-
-type Dependency struct {
-    GroupId string `xml:"groupId"`
-    ArtifactId string `xml:"artifactId"`
-    Version string `xml:"version,omitempty"`
-}
 
 func fileExists(filepath string) bool {
     _, err := os.Stat(filepath)
@@ -24,11 +18,10 @@ func parseVersion(node *xmlquery.Node, globalNode *xmlquery.Node, artifactId *st
     versionTag := xmlquery.FindOne(node, "version")
     var output string
     var versionText string
-    versionRegex := regexp.MustCompile(`^\d{1,3}(?:\.\d{1,3}){0,2}$`)
     versionVariableRegex := regexp.MustCompile(`\${(.*)}`)
     if versionTag != nil {
 	versionText = versionTag.InnerText()	
-	if versionRegex.MatchString(versionText) {
+	if isValidVersion(versionText) {
 	    return versionText
 	} else {
 	    matches := versionVariableRegex.FindAllStringSubmatch(versionText, -1)

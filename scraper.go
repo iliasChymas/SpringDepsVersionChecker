@@ -1,6 +1,6 @@
 package main
 
 
-func fetchDependenciesVersions(springVersion string) {
-
+func fetchDependenciesVersions(springVersion string) ([]Dependency) {
+    return nil
 }
