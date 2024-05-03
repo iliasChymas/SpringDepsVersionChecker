@@ -13,7 +13,7 @@ func main() {
     }	
     for _, dep := range pomDeps {
 	matchedDep, exists := officialVersions[dep.ArtifactId]
-	if exists {
+	if exists && dep.Version != "" {
 	    fmt.Printf("Dependency verson mismatch found for ArtifactId: %s\nSpring recomended version: %s\nCurrent version: %s", dep.ArtifactId, matchedDep.Version, dep.Version)
 	}
     }
