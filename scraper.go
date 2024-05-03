@@ -30,8 +30,7 @@ func fetchDependenciesVersions(springVersion string) (map[string]DependencyInfo,
 	groupId := s.Find("td:nth-of-type(1) > p > code").Text()
 	artifactId := s.Find("td:nth-of-type(2) > p > code").Text()
 	version := s.Find("td:nth-of-type(3) > p > code").Text() 
-	result[artifactId] = DependencyInfo{
-	    GroupId: groupId,
+	result[groupId + "/" + artifactId] = DependencyInfo{
 	    Version: version,
 	}
     })

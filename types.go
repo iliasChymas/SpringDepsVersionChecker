@@ -7,6 +7,5 @@ type Dependency struct {
 }
 
 type DependencyInfo struct {
-    GroupId string `xml:"groupId"`
     Version string `xml:"version,omitempty"`
 }
