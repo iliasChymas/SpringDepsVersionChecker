@@ -2,10 +2,21 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 )
+
+var (
+    outputFile string
+    version string
+)
+
+func init() {
+    flag.StringVar(&outputFile, "output", "deps.json", "Output json file name")
+    flag.StringVar(&version, "version", "current", "The spring version you are currently using")
+}
 
 type Result struct {
     GroupId string
@@ -14,8 +25,21 @@ type Result struct {
     RecomendedVersion string
 }
 
+func parseCmdArgs() {
+    flag.Parse()
+
+    if outputFile == "deps.json" {
+	fmt.Printf("Output not specified defaulting to deps.json\n")
+    }
+
+    if !isValidVersion(version) {
+	fmt.Printf("Spring version not specified, using: current\n")
+    }
+}
+
 func main() {
-    officialVersions, err := fetchDependenciesVersions("3.1.1")
+    parseCmdArgs() 
+    officialVersions, err := fetchDependenciesVersions(version)
     pomDeps := ParsePomFile("pom.xml")
     var output []Result
     if err != nil {
@@ -39,7 +63,7 @@ func main() {
     }	
 
     file, _ := json.MarshalIndent(output, "", " ")
-    err = os.WriteFile("pomVersions.json", file, 0644)
+    err = os.WriteFile(outputFile, file, 0644)
     if err != nil {
 	log.Fatal(err)
     }

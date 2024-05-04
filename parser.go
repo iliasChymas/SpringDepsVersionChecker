@@ -2,7 +2,6 @@ package main
 
 import (
     "errors"
-    "fmt"
     "log"
     "os"
     "regexp"
@@ -26,13 +25,13 @@ func parseVersion(node *xmlquery.Node, globalNode *xmlquery.Node, artifactId *st
 	} else {
 	    matches := versionVariableRegex.FindAllStringSubmatch(versionText, -1)
 	    if len(matches) == 0 {
-		fmt.Printf("[DEBUG] Version string in artifactId: '%s' is not a variable neither a valid version", *artifactId)
+/* 		fmt.Printf("[DEBUG] Version string in artifactId: '%s' is not a variable neither a valid version", *artifactId) */
 		return ""
 	    } else {
 		versionVariable := "//" + matches[0][1]
 		results := xmlquery.Find(globalNode, versionVariable)
 		if len(results) == 0 {
-		    fmt.Printf("[DEBUG] Variable does not exist for artifactId: %s", *artifactId)
+/* 		    fmt.Printf("[DEBUG] Variable does not exist for artifactId: %s", *artifactId) */
 		    return ""
 		}
 		output = results[0].InnerText()

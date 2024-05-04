@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,12 +11,15 @@ import (
 
 
 func fetchDependenciesVersions(springVersion string) (map[string]DependencyInfo, error) {
-    if !isValidVersion(springVersion) {
+    if !isValidVersion(springVersion) && springVersion != "current" {
 	log.Fatalf("Malformed spring version: %s", springVersion)
     }
 
     result := make(map[string]DependencyInfo)
     res, err := http.Get(fmt.Sprintf("https://docs.spring.io/spring-boot/docs/%s/reference/html/dependency-versions.html", springVersion))
+    if res.StatusCode == 404 {
+	return nil, errors.New(fmt.Sprintf("This spring version does not exist: %s", springVersion))
+    }
     if err != nil {
 	return nil, err
     }
